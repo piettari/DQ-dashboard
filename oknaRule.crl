@@ -1,0 +1,56 @@
+rule #10
+  when 
+    cell c: rt == 1, text.matches("^[0-9]+$")
+  then
+    set tag "head" to c
+    set tag "source" to c
+    new label c
+    set category "source" to c.label
+end
+
+rule #15
+  when
+    cell c1: cl == 7, text.equals("Дата")
+	cell c: !blank, cl == c1.cl, rt > c1.rt + 5, !text.equals("Итого"), !text.equals("ВСЕГО")
+  then
+	new label c 
+	set tag "date" to c
+	set category "date" to c.label
+end
+
+rule #17
+  when
+    cell c: tag == "date"
+	cell c1: c1.cl == c.cl, text.matches("[А-Я]+ [0-9]{4}")
+  then
+    new label c1
+    set tag "month" to c1
+	set category "month" to c1.label
+end
+
+rule #20
+  when
+    cell c1: tag == "source"
+	cell c: cl == c1.cl, rt == c1.rt + 3
+  then
+	new label c
+	set tag "metric" to c
+	set category "metric" to c.label
+end
+
+rule #50
+  when
+    cell c: !blank
+    cell d: tag == "date", rt == c.rt
+    cell s: tag == "source", cl == c.cl
+    cell m: tag == "metric", cl == c.cl
+	cell m1: tag == "month"
+  then
+    new entry c
+    add label m.label to c.entry
+	add label d.label to c.entry
+    add label s.label to c.entry
+	add label m1.label to c.entry
+end   
+
+  
