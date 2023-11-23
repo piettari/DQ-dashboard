@@ -15,8 +15,8 @@ with t1 as (
         sumIf(lead, adSourceGroup == '04_Email') as 7_leadEmail, 
         sumIf(lead, adSourceGroup == '08_Прямые заходы') as 8_leadDirect, 
         sumIf(lead, adSourceGroup in 
-        ('13_Партнёры Инфопроект (срок)', '13_Партнёры Инфопроект', '13_Партнёры', '13_Реферальные партнёры') 
-        and adSourceClean != 'ПИК') as 9_leadPartners, 
+            ('13_Партнёры Инфопроект (срок)', '13_Партнёры Инфопроект', '13_Партнёры', '13_Реферальные партнёры') 
+            and adSourceClean != 'ПИК') as 9_leadPartners, 
         sumIf(lead, adSourceGroup == '03_Геосервисы') as 10_leadGeoservice, 
         sumIf(lead, adSourceGroup == '14_Реферальный') as 11_leadReferalas, 
         sumIf(lead, adSourceGroup in ('10_Callback', '12_Не хватило номеров')) as 14_leadCallBack, 
@@ -31,7 +31,7 @@ with t1 as (
         sumIf(lead, adSourceClean = 'ПИК') as 23_leadBigClient,
         'adventumReport' as source
 
-    from {{ref('superset_konstructor')}}
+    from {{source('DQ', 'superset_konstructor') }}
     group by __datetime
     order by 1)
 

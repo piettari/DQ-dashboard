@@ -30,7 +30,7 @@ with t1 as (
         toInt32(IF(t23."23"=='', '0', t23."23")) as 23_leadBigClient
 
     from {{ref('1_client_raw')}}
-
+)
 
 select 
     *, 'companyReport' as source 

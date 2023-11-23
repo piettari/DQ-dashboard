@@ -9,14 +9,12 @@
 
 with
 
-
-
-{%- for fig in metrics -%}
+{% for fig in metrics -%}
 t{{ fig }} as (
     select 
         cast(parseDateTime(concat(replace(replace(date,'aug','08'), 'sep', '09'), '.', substring(mnth, -4, 4)), '%d.%m.%Y') as datetime) as new_date,
         COALESCE(nullIf(DATA, ''), '0') as "{{ fig }}"
-    from {{ ref ('zameri2') }}
+    from {{source('DQ', 'zameri2')}}
     where source == '{{ fig }}'
     order by 1)
     {%- if not loop.last -%}, {% endif %}  
