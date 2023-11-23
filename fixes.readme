@@ -1,0 +1,8 @@
+1) Странный проект дбт, с одной папкой models, где остальное?) 
+2) Нужен файл с .gitignore (target/ dbt_packages/ logs/) такие вещи не тянем в github.
+3) ! Нарушены законы dbt ! В блоке from нельзя обращаться к таблицам напрямую (только ref или source) (такое во всех моделях)
+4) В самих моделях желательно делать отступы и соблюдать небольшой style guide dbt (https://docs.getdbt.com/best-practices/how-we-style/2-how-we-style-our-sql), сейчас тяжело читать
+5) 3_union+anonimize оставить только anonymized*
+6) убрать папку example
+
+
