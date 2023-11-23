@@ -9,12 +9,13 @@ client as (
 
     select 
         __datetime,
-        toFloat64((2* 1_adcostWithTax )) +1 as  1_adcostWithTax ,
-        (2* 11_leadReferalas ) +1 as  11_leadReferalas ,
-        (2* 20_viezdDop ) +1 as  20_viezdDop
+        if(toDate(__datetime)>='2023-09-20', toFloat64(((2* 1_adcostWithTax)+1)/1.2), toFloat64((2* 1_adcostWithTax )) +1) as  1_adcostWithTax ,
+        (2* 11_leadReferalas ) +1 as  11_leadReferalas 
+        --(2* 20_viezdDop ) +1 as  20_viezdDop
 
     from {{ ref('2_client_normalized') }}
 ),
+
 
 datacraft as (
 
@@ -34,12 +35,13 @@ datacraft as (
         16_contSale, 
         17_contClean,
         18_zamer, 
-        19_viezdPlusDop, 
+        19_viezdPlusDop,
+        20_viezdDop, 
         21_dogovorAccept , 
         22_dogovorAcceptSum, 
         23_leadBigClient
 
-    from DQ.2_extract_superset_constructor
+    from {{ ref('2_datacraft_normalized') }}
 ),
 
 pretable as (
@@ -71,7 +73,7 @@ select
     (2*datacraft. 17_contClean ) +1 as  17_contClean ,
     (2*datacraft. 18_zamer ) +1 as  18_zamer ,
     (2*datacraft. 19_viezdPlusDop ) +1 as  19_viezdPlusDop ,
-    20_viezdDop,
+    (2*datacraft. 20_viezdDop ) +1 as  20_viezdDop ,
     (2*datacraft. 21_dogovorAccept ) +1 as  21_dogovorAccept ,
     (2*datacraft. 22_dogovorAcceptSum ) +1 as  22_dogovorAcceptSum ,
     (2*datacraft. 23_leadBigClient ) +1 as  23_leadBigClient ,
