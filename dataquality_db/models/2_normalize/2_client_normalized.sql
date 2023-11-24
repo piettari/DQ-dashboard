@@ -5,6 +5,7 @@
 --Удаление лишних знаков, переименование столбцов, преобразования типов
 
 with t1 as (
+    
     select 
         t1.new_date as __datetime, 
         toInt32(replace(left(t1."1", LENGTH(t1."1")-5), ',', '')) as  1_adcostWithTax ,

@@ -26,6 +26,7 @@ t{{ fig }} as (
 select 
     t1.new_date, t1."1", {% for fig in metrics2 -%}t{{ fig }}."{{ fig }}"
     {%- if not loop.last -%}, {% endif %} {% endfor %}
+    
 from t1
 {% for fig in metrics2 %} 
 left join t{{ fig }} on t1.new_date = t{{ fig }}.new_date{% endfor %} 

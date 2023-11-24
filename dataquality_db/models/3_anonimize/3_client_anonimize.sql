@@ -49,6 +49,7 @@ pretable as (
     select 
         *, 
         'companyReport' as source 
+        
     from client
     left join datacraft using __datetime
 )

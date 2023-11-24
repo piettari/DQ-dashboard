@@ -68,13 +68,15 @@ diff as (
         
         {%- if not loop.last -%}, {% endif %}  
         {% endfor %}
+
     from widetable
 ),
 
 ultraWideTable as (
 
-    select * from 
-    widetable as w
+    select * 
+    
+    from widetable as w
     left join diff d using __datetime
 ),
 
@@ -99,6 +101,7 @@ warnings as (
         ({% for am in action_metric_list %}
             countIf(d.{{ am }}_rel_diff > 1){%- if not loop.last -%} + {% endif %}
             {% endfor %}) as action_problems
+
     from ultraWideTable
     group by __datetime),
 
@@ -126,6 +129,7 @@ diff_metric_names as (
 pretable as (
 
     select * 
+
     from ultraWideTable
     left join diff_metric_names using __datetime
 ),
@@ -133,8 +137,10 @@ pretable as (
 final_table as (
 
     select * 
+
     from pretable 
     left join warnings using __datetime 
 )
+
 
 select * from final_table
