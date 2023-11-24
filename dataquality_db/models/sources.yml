@@ -5,5 +5,5 @@ sources:
     database:
     schema: DQ
     tables:
-      - nacdme: zameri2
+      - name: zameri2
       - name: superset_konstructor
