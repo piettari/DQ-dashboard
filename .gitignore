@@ -1,3 +1,3 @@
-dataquality_db/target
+dataquality_db/target/
 dataquality_db/dbt_packages/
 dataquality_db/logs/
