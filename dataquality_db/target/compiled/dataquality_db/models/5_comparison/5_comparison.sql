@@ -155,13 +155,15 @@ diff as (
                 (23_leadBigClient != 0 AND c.23_leadBigClient != 0), round(abs(100*(c.23_leadBigClient - 23_leadBigClient)/23_leadBigClient), 2)
                 , 10000) as 23_leadBigClient_rel_diff  
         
+
     from widetable
 ),
 
 ultraWideTable as (
 
-    select * from 
-    widetable as w
+    select * 
+    
+    from widetable as w
     left join diff d using __datetime
 ),
 
@@ -260,6 +262,7 @@ warnings as (
             
             countIf(d.21_dogovorAccept_rel_diff > 1)
             ) as action_problems
+
     from ultraWideTable
     group by __datetime),
 
@@ -302,6 +305,7 @@ diff_metric_names as (
 pretable as (
 
     select * 
+
     from ultraWideTable
     left join diff_metric_names using __datetime
 ),
@@ -309,8 +313,10 @@ pretable as (
 final_table as (
 
     select * 
+
     from pretable 
     left join warnings using __datetime 
 )
+
 
 select * from final_table
